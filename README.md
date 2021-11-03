@@ -7,17 +7,17 @@ In this project, supervised and unsupervised machine learning algorithms are use
 
 This is one of Udacity’s capstone project for the Data Science Nanodegree program. The data is provided by Arvato Financial Services, a Bertelsmann subsidiary.
 
-The complete project report can be found in <a href=https://medium.com/@matthias_h2609/customer-segmentation-for-arvato-financial-services-ffb089f2017f>this blogpost</a>.
+The complete project report can be found in [to-be-updated](to-be-updated)
 
 ## Installation
-To run the Jupyter notebooks and python scripts, you will need a standard installtion of Anaconda with Python 3.6.x
+To run the Jupyter notebooks and python scripts, you will need a standard installation of Anaconda with Python 3.6.x
 
 Additional libraries needed:
 - sklearn
 - imblearn
 
 ## Data
-The data used for this project not publically available. It was provided only to those participating in the "in class" competition.
+The data used for this project not publicly available. It was provided only to those participating in the "in class" competition.
 
 ## Files
 - features.csv - data dictionary
@@ -81,4 +81,4 @@ Credit to Udacity and Bertelsmann/Arvato for providing this fun and challenging 
 
 Other useful source of references:
  + [https://github.com/mkeisenbach/arvato](https://github.com/mkeisenbach/arvato)
- + [https://github.com/djirmgard/arvato-udacity-project(https://github.com/djirmgard/arvato-udacity-project)
+ + [https://github.com/djirmgard/arvato-udacity-project](https://github.com/djirmgard/arvato-udacity-project)
