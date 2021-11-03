@@ -23,7 +23,7 @@ The data used for this project not publicly available. It was provided only to t
 - features.csv - data dictionary
 - Arvato Report.pdf - Analysis report
 - Arvato Project Workbook - Jupyter notebook with all parts
-- utils - module containing all common functions used in others modules
+- utils - module contains all common functions used in others modules
 
 ### Data Exploration
 - exploration/Data Exploration.ipynb - Data exploration and preprocessing
