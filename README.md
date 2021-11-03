@@ -22,9 +22,14 @@ The data used for this project not publicly available. It was provided only to t
 ## Files
 - features.csv - data dictionary
 - Arvato Report.pdf - Analysis report
+- Arvato Project Workbook - Jupyter notebook with all parts
+- utils - module containing all common functions used in others modules
+
+### Data Exploration
+- exploration/Data Exploration.ipynb - Data exploration and preprocessing
+- exploration/clean_data.py - Python script for cleaning population and customer data
 
 ### Customer Segmentation
-- segmentation/Arvato Project Workbook.ipynb - Data exploration and preprocessing
 - segmentation/Customer Segmentation Report.ipynb - Analysis of customers
 - segmentation/Mailout.ipynb - Analysis of mailout data using clustering model
 - segmentation/clean_data.py - Python script for cleaning the segmentation data
@@ -40,21 +45,19 @@ The data used for this project not publicly available. It was provided only to t
 ### Customer Segmentation Report
 1. Clean population and customer data
 
-  - From the segmentation directory, run:
-  <pre>python clean_data.py [data_dir]/Udacity_AZDIAS_052018.csv ../features.csv</pre>
+  - From the exploration directory, run:
+  <pre>python clean_data.py [data_dir]/Udacity_AZDIAS_052018.csv [data_dir]/Udacity_CUSTOMERS_052018.csv ../data/merged_data_clean.csv</pre>
 
-  - From the segmentation directory, run:
-  <pre>python clean_data.py [data_dir]/Udacity_CUSTOMERS_052018.csv.csv ../features.csv</pre>
 
 2. Run the Customer Segmentation Report notebook
 
 ### Marketing predictions
 1. Clean the training and test data
 - From the supervised directory, run:
-  <pre>python clean_data.py [data_dir]/Udacity_MAILOUT_052018_TRAIN.csv ../features.csv</pre>
+  <pre>python clean_data.py [data_dir]/Udacity_MAILOUT_052018_TRAIN.csv mailout_train_clean.csv</pre>
 
 - From the supervised directory,
-  <pre>run: python clean_data.py [data_dir]/Udacity_MAILOUT_052018_TEST.csv ../features.csv</pre>
+  <pre>run: python clean_data.py [data_dir]/Udacity_MAILOUT_052018_TEST.csv mailout_test_clean.csv</pre>
 
 2. Run the Supervised Learning Using Ensemble Methods notebook
 
