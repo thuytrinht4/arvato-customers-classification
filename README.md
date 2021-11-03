@@ -24,7 +24,7 @@ The data used for this project not publicly available. It was provided only to t
 - Arvato Report.pdf - Analysis report
 
 ### Customer Segmentation
-- segmentation/Arvato Project Workbook.ipynb - Data expoloration and preprocessing
+- segmentation/Arvato Project Workbook.ipynb - Data exploration and preprocessing
 - segmentation/Customer Segmentation Report.ipynb - Analysis of customers
 - segmentation/Mailout.ipynb - Analysis of mailout data using clustering model
 - segmentation/clean_data.py - Python script for cleaning the segmentation data
@@ -59,10 +59,10 @@ The data used for this project not publicly available. It was provided only to t
 2. Run the Supervised Learning Using Ensemble Methods notebook
 
 ## Results
-The detailed analysis of the results can be read in [this Medium post](https://medium.com/@mei.eisenbach/arvato-bertelsmann-customer-analysis-ae1aac59a1ef) or in Arvato Report.pdf.
+The detailed analysis of the results can be read in [this Medium post](to-be-updated) or in Arvato Report.pdf.
 
 ### Customer segmentation
-- One group was found to be more likely to be customers: These indivduals were more religious, older and savers.
+- One group was found to be more likely to be customers: These individuals were more religious, older and savers.
 - Two groups were found to be less likely to be customers: 1) Individuals with low purchasing activity and wealth (also younger) and 2) Individuals from areas with low population density and were less cultural minded/religiousness
 
 ### Marketing predictions
