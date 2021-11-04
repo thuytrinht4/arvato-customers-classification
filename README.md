@@ -2,9 +2,9 @@
 
 In this project, supervised and unsupervised machine learning algorithms are used to analyze demographical datasets of a general population as well as of customers of a German mail-order company. The project has three major steps: the customer segmentation report, the supervised learning model, and the Kaggle Competition.
 
-    1. **Customer Segmentation Report**: use unsupervised learning methods to analyze attributes of established customers and the general population in order to create customer segments.
-    2. **Supervised Learning Model**: use dataset with attributes from targets of a mail order campaign and the previous segmentation analysis to build a machine learning model that predicts whether or not each individual will respond to the campaign.
-    3. **Kaggle Competition**: use the developed supervised model to make predictions on the campaign data as part of a Kaggle Competition.
+1. **Customer Segmentation Report**: use unsupervised learning methods to analyze attributes of established customers and the general population in order to create customer segments.
+2. **Supervised Learning Model**: use dataset with attributes from targets of a mail order campaign and the previous segmentation analysis to build a machine learning model that predicts whether or not each individual will respond to the campaign.
+3. **Kaggle Competition**: use the developed supervised model to make predictions on the campaign data as part of a Kaggle Competition.
 
 This is one of Udacity’s capstone project for the Data Science Nanodegree program. The data is provided by Bertelsmann Arvato Analytics.
 
@@ -68,7 +68,6 @@ From the directory containing this README.md, run the following commands:
 2. Run the Supervised Learning Using Ensemble Methods notebook
 
 ## Results
-The detailed analysis of the results can be read in [this Medium post](https://medium.com/@thuytrinht4/customer-segmentation-for-arvato-financial-services-4cec6745a20d).
 
 ### Customer segmentation
 - One group was found to be more likely to be customers: These individuals were more religious, older and savers.
@@ -77,11 +76,13 @@ The detailed analysis of the results can be read in [this Medium post](https://m
 ### Marketing predictions
 The final model had an auc_roc score of 0.76294 and a Kaggle score of 0.80143 (https://www.kaggle.com/c/udacity-arvato-identify-customers/leaderboard).
 
+However, the submission is uploaded after the competition deadline, the result cannot be viewed in the public leaderboard.
+
 Model | Local score |Kaggle Score
 --- | --- | ---
+Random Forest Classifier | 0.5916 | 0.6023
 Gradient Boost | 0.76524 | 0.79327
 AdaBoost | 0.76238 | 0.79791
-LightGBM (final) | 0.76294 | 0.80143
 
 
 ## Acknowledgments
