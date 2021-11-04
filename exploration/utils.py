@@ -6,20 +6,12 @@ import pickle
 
 
 # Constant
-DATA_ATTRIBUTES_VALUES_PATH = '../data/DIAS Attributes - Values 2017.xlsx'
-DATA_ATTRIBUTES_DESCRIPTION_PATH = '../data/DIAS Information Levels - Attributes 2017.xlsx'
+DATA_ATTRIBUTES_VALUES_PATH = 'data/DIAS Attributes - Values 2017.xlsx'
+DATA_ATTRIBUTES_DESCRIPTION_PATH = 'data/DIAS Information Levels - Attributes 2017.xlsx'
 COLUMNS_WITH_MIXED_TYPES = ['CAMEO_DEUG_2015', 'CAMEO_INTL_2015', 'CAMEO_DEU_2015']
 
-# Preprocessed
-drop_cols = ['ALTER_KIND2', 'KBA13_KMH_250', 'KBA13_HALTER_66', 'D19_DIGIT_SERV', 'CAMEO_INTL_2015',
-             'KBA13_HERST_SONST', 'LP_LEBENSPHASE_GROB', 'LP_FAMILIE_GROB', 'D19_VERSAND_ANZ_24', 'LNR',
-             'D19_TELKO_ANZ_12', 'PLZ8_HHZ', 'D19_TELKO_ONLINE_DATUM', 'D19_TIERARTIKEL', 'PLZ8_GBZ', 'ORTSGR_KLS9',
-             'PLZ8_ANTG3', 'KK_KUNDENTYP', 'LP_LEBENSPHASE_FEIN', 'D19_VERSI_OFFLINE_DATUM', 'D19_VERSAND_ANZ_12',
-             'D19_VERSAND_ONLINE_QUOTE_12', 'EXTSEL992', 'D19_GESAMT_ANZ_24', 'LP_STATUS_GROB',
-             'ANZ_STATISTISCHE_HAUSHALTE', 'D19_BANKEN_OFFLINE_DATUM', 'KBA05_KRSHERST3', 'D19_VERSAND_ONLINE_DATUM',
-             'D19_BANKEN_LOKAL', 'D19_GARTEN', 'PLZ8_ANTG1', 'ALTER_KIND1', 'CJT_TYP_2', 'PLZ8_BAUMAX',
-             'D19_VERSI_ONLINE_DATUM', 'ALTER_KIND3', 'ALTER_KIND4']
 
+# columns by datatype
 binary_cols = ['DSL_FLAG', 'GREEN_AVANTGARDE', 'HH_DELTA_FLAG', 'KBA05_SEG6', 'KONSUMZELLE', 'SOHO_KZ',
                'UNGLEICHENN_FLAG', 'VERS_TYP', 'ANREDE_KZ']
 
@@ -220,6 +212,23 @@ numerical_cols = ['ZABEOTYP', 'KBA13_SEG_UTILITIES', 'AKT_DAT_KL', 'D19_VERSI_DA
  'VERDICHTUNGSRAUM']
 
 
+# Preprocessed
+drop_missing_30perc = ['ALTER_KIND4', 'TITEL_KZ', 'ALTER_KIND3', 'ALTER_KIND2', 'ALTER_KIND1', 'AGER_TYP', 'EXTSEL992',
+                       'KK_KUNDENTYP', 'KBA05_BAUMAX', 'GEBURTSJAHR', 'ALTER_HH']
+
+drop_identifier = ['LNR']
+
+drop_one_value_only = ['D19_BANKEN_LOKAL', 'D19_BANKEN_OFFLINE_DATUM', 'D19_DIGIT_SERV', 'D19_GARTEN', 'D19_TELKO_ANZ_12',
+                'D19_TELKO_ONLINE_DATUM', 'D19_TIERARTIKEL', 'D19_VERSI_OFFLINE_DATUM', 'D19_VERSI_ONLINE_DATUM']
+
+drop_high_correlation = ['KBA05_BAUMAX', 'LP_LEBENSPHASE_FEIN', 'D19_TELKO_ANZ_12', 'PLZ8_GBZ', 'LP_STATUS_GROB',
+                   'LP_FAMILIE_GROB', 'KBA13_KMH_250', 'LP_LEBENSPHASE_GROB', 'EXTSEL992', 'ORTSGR_KLS9',
+                   'KK_KUNDENTYP', 'D19_VERSAND_ANZ_24', 'D19_DIGIT_SERV', 'CJT_TYP_2', 'D19_VERSAND_ONLINE_DATUM',
+                   'D19_BANKEN_OFFLINE_DATUM', 'ALTER_KIND2', 'LNR', 'ALTER_KIND4', 'KBA13_HALTER_66']
+
+drop_cols = drop_missing_30perc + drop_identifier + drop_one_value_only + drop_high_correlation
+
+
 
 def load_data_2sets(general_filepath, customers_filepath):
     """This function used to load dataset from the given 2 links of categories & messages"""
@@ -305,7 +314,7 @@ def make_dict_for_unknown_attributes(attributes_values):
 
 def replace_unknown_with_nan(df, dictionary):
     '''This function accept a dataframe which is
-    going to be check for the missing values accorfing
+    going to be check for the missing values according
     to the dictionary and if such exists it will be replaced with numpy.nan.
     Args:
     df: demographics dataframe

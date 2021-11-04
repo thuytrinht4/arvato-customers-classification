@@ -1,3 +1,4 @@
+import sys
 from utils import *
 
 
@@ -32,12 +33,8 @@ def clean_data(df):
  print(f'There are {len(drop_identifier_cols)} columns with identifier or columns with one value with more than '
        f'95% of total population')
 
- # find columns that highly correlated
- drop_high_corr_cols = corr_to_drop(df)
- print(f'There are {len(drop_high_corr_cols)} columns that highly correlated with each others')
-
  # append to drop cols
- drop_cols = list(set(cols_missing_30pect + drop_high_corr_cols + drop_identifier_cols))
+ drop_cols = list(set(cols_missing_30pect + drop_identifier_cols))
  print("{} columns will be dropped from the dataset: {}".format(len(drop_cols), drop_cols))
 
  df.drop(columns=drop_cols, inplace=True)
@@ -56,44 +53,40 @@ def clean_data(df):
  # feature transformation
  print('--CLEAN CATEGORICAL VARIABLES--')
  # transform datetime variable into Year and Month, + drop variables with too many values
- df, drop_categorical_cols = clean_categorical(df)
+ df, _ = clean_categorical(df)
+ # drop unused columns
+ designated_cols = binary_cols + categorical_cols + numerical_cols
+ if 'TYPE' in df.columns:
+    designated_cols = designated_cols + ['TYPE']
+ df = df[designated_cols]
+ print(f'Dropped {df.shape[1] - ncol} columns, Number of columns after drop: {df.shape[1]}')
 
  return df
 
 
 def main():
- DEBUG = True
- if DEBUG:
-  # general_filepath = 'data/general_subset.csv'
-  # customers_filepath = 'data/customers_subset.csv'
-  # database_filepath = 'data/df_subset_clean.pkl'
+ if len(sys.argv) == 4:
+    general_filepath, customers_filepath, database_filepath = sys.argv[1:]
 
-  general_filepath = 'data/init_general.csv'
-  customers_filepath = 'data/init_customers.csv'
-  database_filepath = 'data/df_clean.pkl'
+    print('Loading data...\n    AZDIAS: {}\n    CUSTOMERS: {}'
+          .format(general_filepath, customers_filepath))
+    df = load_data_2sets(general_filepath, customers_filepath)
 
-  # if len(sys.argv) == 4:
-  #     general_filepath, customers_filepath, database_filepath = sys.argv[1:]
+    print('Cleaning data...')
+    df = clean_data(df)
 
-  print('Loading data...\n    GENERAL: {}\n    CATEGORIES: {}'
-        .format(general_filepath, customers_filepath))
-  df = load_data_2sets(general_filepath, customers_filepath)
+    print('Saving data...\n    DATABASE: {}'.format(database_filepath))
+    save_data(df, database_filepath)
 
-  print('Cleaning data...')
-  df = clean_data(df)
-
-  print('Saving data...\n    DATABASE: {}'.format(database_filepath))
-  save_data(df, database_filepath)
-
-  print('Cleaned data saved to database!')
+    print('Cleaned data saved to database!')
 
  else:
-  print('Please provide the filepaths of the messages and categories ' \
-        'datasets as the first and second argument respectively, as ' \
-        'well as the filepath of the database to save the cleaned data ' \
-        'to as the third argument. \n\nExample: python process_data_initial.py ' \
-        'disaster_messages.csv disaster_categories.csv ' \
-        'DisasterResponse.db')
+      print('Please provide the filepaths of the messages and categories ' \
+            'datasets as the first and second argument respectively, as ' \
+            'well as the filepath of the database to save the cleaned data ' \
+            'to as the third argument. \n\nExample: python clean_data.py ' \
+            'Udacity_AZDIAS_052018.csv Udacity_CUSTOMERS_052018.csv ' \
+            'data_merged_clean.db')
 
 
 if __name__ == '__main__':
