@@ -63,7 +63,7 @@ From the directory containing this README.md, run the following commands:
 ## Prediction Results
 Model | Local score |Kaggle Score
 --- | --- | ---
-Random Forest Classifier | 0.5916 | 0.6023
+Random Forest Classifier | 0.59016 | 0.60231
 AdaBoost | 0.76524 | 0.79327
 Gradient Boost | 0.76238 | 0.79791
 
