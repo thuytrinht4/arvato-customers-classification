@@ -1,11 +1,12 @@
 # Customer Segmentation for Arvato Financial Services
 
-In this project, supervised and unsupervised machine learning algorithms are used to analyze demographical datasets of a general population as well as of customers of a German mail-order company. The goal of the project is twofold:
+In this project, supervised and unsupervised machine learning algorithms are used to analyze demographical datasets of a general population as well as of customers of a German mail-order company. The project has three major steps: the customer segmentation report, the supervised learning model, and the Kaggle Competition.
 
-1. Cluster the datasets into groups to find out characteristics of existing customers and differences to general population
-2. Develop a forecasting model to predict and identify prospective customer response for a marketing campaign
+    1. **Customer Segmentation Report**: use unsupervised learning methods to analyze attributes of established customers and the general population in order to create customer segments.
+    2. **Supervised Learning Model**: use dataset with attributes from targets of a mail order campaign and the previous segmentation analysis to build a machine learning model that predicts whether or not each individual will respond to the campaign.
+    3. **Kaggle Competition**: use the developed supervised model to make predictions on the campaign data as part of a Kaggle Competition.
 
-This is one of Udacity’s capstone project for the Data Science Nanodegree program. The data is provided by Arvato Financial Services, a Bertelsmann subsidiary.
+This is one of Udacity’s capstone project for the Data Science Nanodegree program. The data is provided by Bertelsmann Arvato Analytics.
 
 The complete project report can be found in [this Medium post](https://medium.com/@thuytrinht4/customer-segmentation-for-arvato-financial-services-4cec6745a20d).
 
@@ -18,10 +19,7 @@ Additional libraries needed:
 ## Data
 The data used for this project not publicly available. It was provided only to those participating in the "in class" competition.
 
-## Files
-- features.csv - data dictionary
-- Arvato Report.pdf - Analysis report
-- Arvato Project Workbook - Jupyter notebook with all parts
+## Project Structures
 
 ### Data Exploration
 - exploration/Data Exploration.ipynb - Data exploration and preprocessing
