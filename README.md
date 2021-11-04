@@ -28,14 +28,14 @@ The data used for this project not publicly available. It was provided only to t
 
 ### Customer Segmentation
 - segmentation/Customer Segmentation Report.ipynb - Analysis of customers
-- segmentation/Mailout.ipynb - Analysis of mailout data using clustering model
 - segmentation/clean_data.py - Python script for cleaning the segmentation data
+- segmentation/utils - module contains all common functions used in others modules
 - segmenation/fit_clustering.py - File containing clustering pipeline function. This can also be used as a standlone script.
 
 ### Marketing Predictions
-- supervised/Supervised Learning Using Ensemble Methods.ipynb - Classification using ensemble methods
-- supervised/Supervised Learning Using Keras.ipynb - Classification using a neural network
+- supervised/Supervised Learning.ipynb - Classification using supervised learning techniques
 - supervised/clean_data - Python script for cleaning classification data
+- supervised/utils - module contains all common functions used in others modules
 - supervised/preprocess.py - Python file for preprocessing functions
 
 ## Instructions
@@ -46,43 +46,26 @@ From the directory containing this README.md, run the following commands:
 
   <pre>python exploration/clean_data.py [data_dir]/Udacity_AZDIAS_052018.csv [data_dir]/Udacity_CUSTOMERS_052018.csv [data_dir]/merged_data_clean.pkl</pre>
 
-2. Fit clustering algorithms to the merged dataset, using parameters: n_pca=164, n_clusters = 10
+2. Clean mailout_train dataset
 
-  <pre>python segmentation/fit_clustering.py [data_dir]/data_merged_clean.pkl 164 10 [result_dir]/clust_model.pkl</pre>
+  <pre>python segmentation/clean_data.py [data_dir]/Udacity_MAILOUT_052018_TRAIN.csv [data_dir]/mailout_train_clean.pkl</pre>
 
-
-4. Clean mailout_train dataset
-
-  <pre>python segmentation/clean_data.py data/Udacity_MAILOUT_052018_TRAIN.csv data/mailout_train_clean.pkl</pre>
-
-5. Run the Customer Segmentation Report notebook
+3. Run the Customer Segmentation Report notebook
 
 ### Marketing predictions
-1. Clean the training and test data
-- From the supervised directory, run:
-  <pre>python clean_data.py [data_dir]/Udacity_MAILOUT_052018_TRAIN.csv mailout_train_clean.csv</pre>
+1. Clean the mailout_test data
 
-- From the supervised directory,
-  <pre>run: python clean_data.py [data_dir]/Udacity_MAILOUT_052018_TEST.csv mailout_test_clean.csv</pre>
+  <pre>python supervised/clean_data.py [data_dir]/Udacity_MAILOUT_052018_TEST.csv [data_dir]/mailout_test_clean.pkl</pre>
 
-2. Run the Supervised Learning Using Ensemble Methods notebook
+2. Run the Supervised Learning notebook
 
-## Results
 
-### Customer segmentation
-- One group was found to be more likely to be customers: These individuals were more religious, older and savers.
-- Two groups were found to be less likely to be customers: 1) Individuals with low purchasing activity and wealth (also younger) and 2) Individuals from areas with low population density and were less cultural minded/religiousness
-
-### Marketing predictions
-The final model had an auc_roc score of 0.76294 and a Kaggle score of 0.80143 (https://www.kaggle.com/c/udacity-arvato-identify-customers/leaderboard).
-
-However, the submission is uploaded after the competition deadline, the result cannot be viewed in the public leaderboard.
-
+## Prediction Results
 Model | Local score |Kaggle Score
 --- | --- | ---
 Random Forest Classifier | 0.5916 | 0.6023
-Gradient Boost | 0.76524 | 0.79327
-AdaBoost | 0.76238 | 0.79791
+AdaBoost | 0.76524 | 0.79327
+Gradient Boost | 0.76238 | 0.79791
 
 
 ## Acknowledgments
