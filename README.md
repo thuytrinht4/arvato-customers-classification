@@ -7,14 +7,13 @@ In this project, supervised and unsupervised machine learning algorithms are use
 
 This is one of Udacity’s capstone project for the Data Science Nanodegree program. The data is provided by Arvato Financial Services, a Bertelsmann subsidiary.
 
-The complete project report can be found in [to-be-updated](to-be-updated)
+The complete project report can be found in [this Medium post](https://medium.com/@thuytrinht4/customer-segmentation-for-arvato-financial-services-4cec6745a20d).
 
 ## Installation
 To run the Jupyter notebooks and python scripts, you will need a standard installation of Anaconda with Python 3.6.x
 
 Additional libraries needed:
 - sklearn
-- imblearn
 
 ## Data
 The data used for this project not publicly available. It was provided only to those participating in the "in class" competition.
@@ -23,11 +22,11 @@ The data used for this project not publicly available. It was provided only to t
 - features.csv - data dictionary
 - Arvato Report.pdf - Analysis report
 - Arvato Project Workbook - Jupyter notebook with all parts
-- utils - module contains all common functions used in others modules
 
 ### Data Exploration
 - exploration/Data Exploration.ipynb - Data exploration and preprocessing
 - exploration/clean_data.py - Python script for cleaning population and customer data
+- exploration/utils - module contains all common functions used in others modules
 
 ### Customer Segmentation
 - segmentation/Customer Segmentation Report.ipynb - Analysis of customers
@@ -42,14 +41,23 @@ The data used for this project not publicly available. It was provided only to t
 - supervised/preprocess.py - Python file for preprocessing functions
 
 ## Instructions
-### Customer Segmentation Report
+From the directory containing this README.md, run the following commands:
+
+### Customer Segmentation
 1. Clean population and customer data
 
-  - From the exploration directory, run:
-  <pre>python clean_data.py [data_dir]/Udacity_AZDIAS_052018.csv [data_dir]/Udacity_CUSTOMERS_052018.csv ../data/merged_data_clean.csv</pre>
+  <pre>python exploration/clean_data.py [data_dir]/Udacity_AZDIAS_052018.csv [data_dir]/Udacity_CUSTOMERS_052018.csv [data_dir]/merged_data_clean.pkl</pre>
+
+2. Fit clustering algorithms to the merged dataset, using parameters: n_pca=164, n_clusters = 10
+
+  <pre>python segmentation/fit_clustering.py [data_dir]/data_merged_clean.pkl 164 10 [result_dir]/clust_model.pkl</pre>
 
 
-2. Run the Customer Segmentation Report notebook
+4. Clean mailout_train dataset
+
+  <pre>python segmentation/clean_data.py data/Udacity_MAILOUT_052018_TRAIN.csv data/mailout_train_clean.pkl</pre>
+
+5. Run the Customer Segmentation Report notebook
 
 ### Marketing predictions
 1. Clean the training and test data
@@ -62,7 +70,7 @@ The data used for this project not publicly available. It was provided only to t
 2. Run the Supervised Learning Using Ensemble Methods notebook
 
 ## Results
-The detailed analysis of the results can be read in [this Medium post](to-be-updated) or in Arvato Report.pdf.
+The detailed analysis of the results can be read in [this Medium post](https://medium.com/@thuytrinht4/customer-segmentation-for-arvato-financial-services-4cec6745a20d).
 
 ### Customer segmentation
 - One group was found to be more likely to be customers: These individuals were more religious, older and savers.
