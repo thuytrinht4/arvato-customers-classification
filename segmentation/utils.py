@@ -3,23 +3,15 @@ import pandas as pd
 import numpy as np
 from datetime import datetime
 import pickle
+import joblib
 
 
 # Constant
-DATA_ATTRIBUTES_VALUES_PATH = '../data/DIAS Attributes - Values 2017.xlsx'
-DATA_ATTRIBUTES_DESCRIPTION_PATH = '../data/DIAS Information Levels - Attributes 2017.xlsx'
+DATA_ATTRIBUTES_VALUES_PATH = 'data/DIAS Attributes - Values 2017.xlsx'
+DATA_ATTRIBUTES_DESCRIPTION_PATH = 'data/DIAS Information Levels - Attributes 2017.xlsx'
 COLUMNS_WITH_MIXED_TYPES = ['CAMEO_DEUG_2015', 'CAMEO_INTL_2015', 'CAMEO_DEU_2015']
 
 # Preprocessed
-drop_cols = ['ALTER_KIND2', 'KBA13_KMH_250', 'KBA13_HALTER_66', 'D19_DIGIT_SERV', 'CAMEO_INTL_2015',
-             'KBA13_HERST_SONST', 'LP_LEBENSPHASE_GROB', 'LP_FAMILIE_GROB', 'D19_VERSAND_ANZ_24', 'LNR',
-             'D19_TELKO_ANZ_12', 'PLZ8_HHZ', 'D19_TELKO_ONLINE_DATUM', 'D19_TIERARTIKEL', 'PLZ8_GBZ', 'ORTSGR_KLS9',
-             'PLZ8_ANTG3', 'KK_KUNDENTYP', 'LP_LEBENSPHASE_FEIN', 'D19_VERSI_OFFLINE_DATUM', 'D19_VERSAND_ANZ_12',
-             'D19_VERSAND_ONLINE_QUOTE_12', 'EXTSEL992', 'D19_GESAMT_ANZ_24', 'LP_STATUS_GROB',
-             'ANZ_STATISTISCHE_HAUSHALTE', 'D19_BANKEN_OFFLINE_DATUM', 'KBA05_KRSHERST3', 'D19_VERSAND_ONLINE_DATUM',
-             'D19_BANKEN_LOKAL', 'D19_GARTEN', 'PLZ8_ANTG1', 'ALTER_KIND1', 'CJT_TYP_2', 'PLZ8_BAUMAX',
-             'D19_VERSI_ONLINE_DATUM', 'ALTER_KIND3', 'ALTER_KIND4']
-
 binary_cols = ['DSL_FLAG', 'GREEN_AVANTGARDE', 'HH_DELTA_FLAG', 'KBA05_SEG6', 'KONSUMZELLE', 'SOHO_KZ',
                'UNGLEICHENN_FLAG', 'VERS_TYP', 'ANREDE_KZ']
 
@@ -220,24 +212,6 @@ numerical_cols = ['ZABEOTYP', 'KBA13_SEG_UTILITIES', 'AKT_DAT_KL', 'D19_VERSI_DA
  'VERDICHTUNGSRAUM']
 
 
-
-def load_data_2sets(general_filepath, customers_filepath):
-    """This function used to load dataset from the given 2 links of categories & messages"""
-    # load gerenal dataset
-    general = pd.read_csv(general_filepath)
-
-    # load customer dataset
-    customers = pd.read_csv(customers_filepath)
-
-    # merging datasets
-    general['TYPE'] = 'general'
-    customers['TYPE'] = 'customer'
-
-    df = pd.concat([general, customers.drop(columns=['CUSTOMER_GROUP', 'ONLINE_PURCHASE', 'PRODUCT_GROUP'])])
-
-    return df
-
-
 def load_data_pkl(data_filepath):
     """This function used to load dataset from the given 2 links of categories & messages"""
     # load mailout dataset
@@ -248,7 +222,7 @@ def load_data_pkl(data_filepath):
 
 def save_data(df, database_filepath):
     """This function help to save dataframe to database"""
-    df.to_pickle(database_filepath)
+    joblib.dump(df, database_filepath)
 
 
 def format_mixed_types(df, cols_mixed_types=COLUMNS_WITH_MIXED_TYPES):
@@ -319,41 +293,7 @@ def replace_unknown_with_nan(df, dictionary):
                 df.loc[df[key] == value[i], key] = np.nan
 
 
-def identifier_to_drop(df):
-    nrow = df.shape[0]
-    cols_to_drop = []
-
-    for col in df.columns:
-        # check if column has more than 95% of values are uniques
-        nunique_rate = df[col].nunique() / nrow
-        if nunique_rate > 0.95:
-            cols_to_drop.append(col)
-            print(f'{col} has {round(nunique_rate, 2) * 100}% values are unique')
-
-        # check if column has more than 95% of values belongs to only 1 categories
-        mode_count = df[col].value_counts().values[0]
-        mode_freq = mode_count / nrow
-        if mode_freq > 0.95:
-            cols_to_drop.append(col)
-            print(f'{col} has {round(mode_freq, 2) * 100}% values belongs to categoy {df[col].value_counts().index[0]}')
-
-    return cols_to_drop
-
-
-def corr_to_drop(df):
-    # Create correlation matrix for just Features to determine different models to test
-    corr_matrix = df.corr().abs().round(2)
-
-    # Select upper triangle of correlation matrix
-    upper = corr_matrix.where(np.triu(np.ones(corr_matrix.shape), k=1).astype(bool))
-
-    # Find features with correlation greater than 0.90
-    cols_to_drop = [column for column in upper.columns if any(upper[column] > 0.90)]
-
-    return cols_to_drop
-
-
-def clean_categorical(df, cols_drop = []):
+def clean_categorical(df):
     '''This function deals designated columns and imputes missing data.
     Args:
     df: demographic dataframe
@@ -368,34 +308,5 @@ def clean_categorical(df, cols_drop = []):
             df['EINGEFUEGT_AM_MONTH'] = df['EINGEFUEGT_AM'].apply(
                 lambda x: np.nan if str(x) == 'nan' else datetime.strptime(str(x), '%Y-%m-%d %H:%M:%S').month)
 
-            if col not in cols_drop:
-                cols_drop.append(col)
+    return df
 
-        else:
-            # drop columns have too many categorical values
-            n_unique = df[col].dropna().nunique()
-            if n_unique > 20:
-                if col not in cols_drop:
-                    cols_drop.append(col)
-
-    df.drop(columns=cols_drop, inplace=True)
-
-    return df, cols_drop
-
-
-def get_columns_by_type(df):
-    # Categorical
-    categorical_cols = list(df.select_dtypes(['object']).columns)
-
-    # Binary
-    num_cols = df.select_dtypes(['float64', 'int64']).columns
-    binary_cols = []
-    for col in num_cols:
-        n_unique = df[col].dropna().nunique()
-        if n_unique == 2:
-            binary_cols.append(col)
-
-    # Numerical
-    numerical_cols = list(set(df.columns) - set(binary_cols) - set(categorical_cols))
-
-    return binary_cols, categorical_cols, numerical_cols
